@@ -1,5 +1,22 @@
 use dotenv;
 
+#[derive(Debug, PartialEq)]
+struct PostData {
+    text: String,
+    source_lang: String,
+    target_lang: String,
+}
+
+impl Default for PostData {
+    fn default() -> Self {
+        Self {
+            text: "".into(),
+            source_lang: "en".into(),
+            target_lang: "ja".into(),
+        }
+    }
+}
+
 fn transrate_api_url() -> Result<String, dotenv::Error> {
     dotenv::var("TRANSRATE_API_URL")
 }
@@ -26,5 +43,20 @@ mod tests {
         );
 
         Ok(())
+    }
+
+    #[test]
+    fn test_post_data_default() {
+        let post_data = PostData {
+            text: "".into(),
+            source_lang: "en".into(),
+            target_lang: "ja".into(),
+        };
+        assert_eq!(
+            post_data,
+            PostData {
+                ..Default::default()
+            }
+        );
     }
 }
