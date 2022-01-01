@@ -6,3 +6,12 @@ edition = "2021"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
+dotenv = "*"
+reqwest = { version = "*", features = ["json"] }
+tokio = { version = "*", features = ["full"] }
+serde = { version = "*", features = ["derive"] }
+serde_json = "*"
+anyhow = "*"
+
+[dev-dependencies]
+mockito = "*"
