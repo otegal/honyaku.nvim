@@ -1,7 +1,7 @@
 use dotenv;
-use serde::Deserialize;
+use serde::{Deserialize, Serialize};
 
-#[derive(Debug, PartialEq)]
+#[derive(Debug, PartialEq, Serialize)]
 struct PostRequest {
     text: String,
     source_lang: String,
@@ -40,8 +40,15 @@ impl Client {
         }
     }
 
-    async fn post_request(&self) -> anyhow::Result<PostResponse> {
-        Ok(self.client.post(&self.url).send().await?.json().await?)
+    async fn post_request(&self, req: PostRequest) -> anyhow::Result<PostResponse> {
+        Ok(self
+            .client
+            .post(&self.url)
+            .json(&req)
+            .send()
+            .await?
+            .json()
+            .await?)
     }
 }
 
@@ -116,7 +123,11 @@ mod tests {
             .with_status(200)
             .with_body(json)
             .create();
-        let res = client.post_request().await?;
+        let req = PostRequest {
+            text: "Hello".into(),
+            ..Default::default()
+        };
+        let res = client.post_request(req).await?;
 
         Mock::expect(mock, 1);
         assert_eq!(
