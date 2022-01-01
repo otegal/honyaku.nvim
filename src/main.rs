@@ -11,10 +11,7 @@ async fn main() -> anyhow::Result<()> {
     println!("{}", url);
 
     let client = translate::client::Client::new(url);
-    let req = PostRequest {
-        text: "translation".into(),
-        ..Default::default()
-    };
+    let req = PostRequest::build_params_en_to_ja("translation".into());
     let res = client.post_request(req).await?;
     println!("{:?}", res);
     Ok(())
