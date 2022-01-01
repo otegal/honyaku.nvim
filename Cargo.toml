@@ -7,3 +7,11 @@ edition = "2021"
 
 [dependencies]
 dotenv = "*"
+reqwest = { version = "*", features = ["json"] }
+tokio = { version = "*", features = ["full"] }
+serde = { version = "*", features = ["derive"] }
+serde_json = "*"
+anyhow = "*"
+
+[dev-dependencies]
+mockito = "*"
