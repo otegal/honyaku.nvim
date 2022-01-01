@@ -1,20 +1,20 @@
 use crate::translate::request::PostRequest;
 use crate::translate::response::PostResponse;
 
-struct Client {
+pub struct Client {
     url: String,
     client: reqwest::Client,
 }
 
 impl Client {
-    fn new(url: String) -> Self {
+    pub fn new(url: String) -> Self {
         Self {
             url,
             client: reqwest::Client::new(),
         }
     }
 
-    async fn post_request(&self, req: PostRequest) -> anyhow::Result<PostResponse> {
+    pub async fn post_request(&self, req: PostRequest) -> anyhow::Result<PostResponse> {
         Ok(self
             .client
             .post(&self.url)
